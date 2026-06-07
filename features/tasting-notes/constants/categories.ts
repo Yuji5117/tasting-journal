@@ -5,3 +5,6 @@ export const categories = [
   { label: "Beer", value: "beer" },
   { label: "Shochu", value: "shochu" },
 ] as const;
+
+export type TastingNoteCategory =
+  (typeof categories)[number]["value"];

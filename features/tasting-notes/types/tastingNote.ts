@@ -7,3 +7,4 @@ export type TastingNote = {
   rating: number;
   createdAt: string;
 };
+

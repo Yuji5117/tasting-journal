@@ -13,7 +13,7 @@ export default function NotesPage() {
         </div>
 
         <Link
-          href="/notes/new"
+          href="/notes/create"
           className="rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white"
         >
           + Add
