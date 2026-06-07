@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { TastingNoteCategory } from "../constants/categories";
 
 export function TastingNoteForm() {
@@ -15,7 +15,7 @@ export function TastingNoteForm() {
   const [pairing, setPairing] = useState("");
   const [memo, setMemo] = useState("");
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SubmitEvent) => {
     event.preventDefault();
 
     console.log({
