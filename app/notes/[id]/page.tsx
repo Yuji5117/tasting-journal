@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { mockNotes } from "@/features/tasting-notes/data/mockNotes";
+import { mockTastingNotes } from "@/features/tasting-notes/data/mockNotes";
 
 type TastingNoteDetailPageProps = {
   params: Promise<{
@@ -13,7 +13,7 @@ export default async function TastingNoteDetailPage({
   params,
 }: TastingNoteDetailPageProps) {
   const { id } = await params
-  const note = mockNotes.find((note) => note.id === id);
+  const note = mockTastingNotes.find((note) => note.id === id);
 
   if (!note) {
     notFound();

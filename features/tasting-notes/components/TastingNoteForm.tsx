@@ -15,7 +15,7 @@ export function TastingNoteForm() {
   const [pairing, setPairing] = useState("");
   const [memo, setMemo] = useState("");
 
-  const handleSubmit = (event: SubmitEvent) => {
+  const handleSubmit: React.ComponentProps<"form">["onSubmit"] = (event) => {
     event.preventDefault();
 
     console.log({

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CategoryFilter } from "@/features/tasting-notes/components/CategoryFilter";
-import { NoteCard } from "@/features/tasting-notes/components/NoteCard";
-import { mockNotes } from "@/features/tasting-notes/data/mockNotes";
+import { TastingNoteCard } from "@/features/tasting-notes/components/NoteCard";
+import { mockTastingNotes } from "@/features/tasting-notes/data/mockNotes";
 
 export default function NotesPage() {
   return (
@@ -23,8 +23,8 @@ export default function NotesPage() {
       <CategoryFilter />
 
       <section className="space-y-3">
-        {mockNotes.map((note) => (
-          <NoteCard key={note.id} note={note} />
+        {mockTastingNotes.map((note) => (
+          <TastingNoteCard key={note.id} note={note} />
         ))}
       </section>
     </main>
