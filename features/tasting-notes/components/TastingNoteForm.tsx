@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { TastingNoteCategory } from "../constants/categories";
+
+import { categories } from "../constants/categories";
 
 export function TastingNoteForm() {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState<TastingNoteCategory>("wine");
-  const [country, setCountry] = useState("");
-  const [region, setRegion] = useState("");
-  const [grapeOrRice, setGrapeOrRice] = useState("");
-  const [rating, setRating] = useState(3);
+  const [category, setCategory] = useState("wine");
+  const [producer, setProducer] = useState("");
+  const [area, setArea] = useState("");
+  const [variety, setVariety] = useState("");
+  const [tastedAt, setTastedAt] = useState("");
+  const [price, setPrice] = useState("");
+  const [rating, setRating] = useState(4);
   const [aroma, setAroma] = useState("");
   const [taste, setTaste] = useState("");
   const [pairing, setPairing] = useState("");
@@ -21,9 +24,11 @@ export function TastingNoteForm() {
     console.log({
       name,
       category,
-      country,
-      region,
-      grapeOrRice,
+      producer,
+      area,
+      variety,
+      tastedAt,
+      price,
       rating,
       aroma,
       taste,
@@ -33,146 +38,189 @@ export function TastingNoteForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          名前
-        </label>
-        <input
-          className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="例：Penfolds Bin 389"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          required
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <section>
+        <p className="mb-2 text-sm font-semibold text-stone-700">
+          写真を追加 <span className="text-stone-400">（最大5枚）</span>
+        </p>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          種類
-        </label>
-        <select
-          className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          value={category}
-          onChange={(event) =>
-            setCategory(event.target.value as TastingNoteCategory)
-          }
-        >
-          <option value="wine">Wine</option>
-          <option value="sake">Sake</option>
-          <option value="beer">Beer</option>
-          <option value="shochu">Shochu</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
+        <div className="flex gap-3 overflow-x-auto">
+          <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-stone-200">
+            <img
+              src="/images/wine-red.jpg"
+              alt="wine bottle"
+              className="h-full w-full object-cover"
+            />
+          </div>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          国
-        </label>
-        <input
-          className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="例：Australia"
-          value={country}
-          onChange={(event) => setCountry(event.target.value)}
-        />
-      </div>
+          <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-stone-200">
+            <img
+              src="/images/wine-glass.jpg"
+              alt="wine glass"
+              className="h-full w-full object-cover"
+            />
+          </div>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          地域
-        </label>
-        <input
-          className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="例：South Australia"
-          value={region}
-          onChange={(event) => setRegion(event.target.value)}
-        />
-      </div>
+          <button
+            type="button"
+            className="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border border-dashed border-stone-300 bg-white text-3xl text-stone-500"
+          >
+            +
+          </button>
+        </div>
+      </section>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          品種 / 米 / 原料
-        </label>
-        <input
-          className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="例：Shiraz, 山田錦"
-          value={grapeOrRice}
-          onChange={(event) => setGrapeOrRice(event.target.value)}
-        />
-      </div>
+      <section className="space-y-3">
+        <FormRow label="種類">
+          <select
+            className="h-10 w-full rounded-lg border border-stone-200 bg-white px-3 text-sm text-stone-900"
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+          >
+            {categories.map((category) => (
+              <option key={category.value} value={category.value}>
+                {category.label}
+              </option>
+            ))}
+          </select>
+        </FormRow>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          評価
-        </label>
-        <select
-          className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          value={rating}
-          onChange={(event) => setRating(Number(event.target.value))}
-        >
-          {[1, 2, 3, 4, 5].map((value) => (
-            <option key={value} value={value}>
-              {value} stars
-            </option>
-          ))}
-        </select>
-      </div>
+        <FormRow label="名前">
+          <Input
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Penfolds Bin 389"
+          />
+        </FormRow>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          香り
-        </label>
-        <textarea
-          className="min-h-24 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="例：ブラックベリー、バニラ、スパイス"
+        <FormRow label="生産者">
+          <Input
+            value={producer}
+            onChange={(event) => setProducer(event.target.value)}
+            placeholder="Penfolds"
+          />
+        </FormRow>
+
+        <FormRow label="産地">
+          <Input
+            value={area}
+            onChange={(event) => setArea(event.target.value)}
+            placeholder="Australia｜South Australia"
+          />
+        </FormRow>
+
+        <FormRow label="品種">
+          <Input
+            value={variety}
+            onChange={(event) => setVariety(event.target.value)}
+            placeholder="Cabernet Sauvignon, Shiraz"
+          />
+        </FormRow>
+
+        <FormRow label="飲んだ日">
+          <Input
+            value={tastedAt}
+            onChange={(event) => setTastedAt(event.target.value)}
+            placeholder="2024/06/07"
+          />
+        </FormRow>
+
+        <FormRow label="価格">
+          <Input
+            value={price}
+            onChange={(event) => setPrice(event.target.value)}
+            placeholder="AUD 65"
+          />
+        </FormRow>
+
+        <FormRow label="評価">
+          <div className="flex gap-1 text-3xl">
+            {[1, 2, 3, 4, 5].map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setRating(value)}
+                className={
+                  value <= rating ? "text-amber-500" : "text-stone-300"
+                }
+              >
+                ★
+              </button>
+            ))}
+          </div>
+        </FormRow>
+      </section>
+
+      <section className="space-y-3">
+        <TextArea
+          label="香り"
           value={aroma}
           onChange={(event) => setAroma(event.target.value)}
+          placeholder="ブラックベリー、カシス、バニラ、チョコレートの香り。"
         />
-      </div>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          味わい
-        </label>
-        <textarea
-          className="min-h-24 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="例：果実味が強く、タンニンはしっかり"
+        <TextArea
+          label="味わい"
           value={taste}
           onChange={(event) => setTaste(event.target.value)}
+          placeholder="フルボディで濃厚。タンニンはしっかりしているが滑らか。"
         />
-      </div>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          ペアリング
-        </label>
-        <textarea
-          className="min-h-20 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="例：ステーキ、ラム、焼き鳥"
+        <TextArea
+          label="ペアリング"
           value={pairing}
           onChange={(event) => setPairing(event.target.value)}
+          placeholder="ステーキ、ラムチョップ、熟成チーズとよく合う。"
         />
-      </div>
 
-      <div>
-        <label className="mb-1 block text-sm font-medium text-stone-700">
-          メモ
-        </label>
-        <textarea
-          className="min-h-24 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-stone-900"
-          placeholder="自由メモ"
+        <TextArea
+          label="メモ"
           value={memo}
           onChange={(event) => setMemo(event.target.value)}
+          placeholder="オーストラリアらしい力強さ。コスパ良い。また飲みたい。"
         />
-      </div>
-
-      <button
-        type="submit"
-        className="w-full rounded-xl bg-stone-900 px-4 py-3 font-medium text-white"
-      >
-        保存する
-      </button>
+      </section>
     </form>
+  );
+}
+
+function FormRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="grid grid-cols-[90px_1fr] items-center gap-3">
+      <label className="text-sm font-semibold text-stone-800">{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function Input(props: React.ComponentProps<"input">) {
+  return (
+    <input
+      {...props}
+      className="h-10 w-full rounded-lg border border-stone-200 bg-white px-3 text-sm text-stone-900 outline-none focus:border-rose-900"
+    />
+  );
+}
+
+function TextArea({
+  label,
+  ...props
+}: React.ComponentProps<"textarea"> & { label: string }) {
+  return (
+    <label className="block rounded-xl border border-stone-200 bg-white p-3">
+      <span className="mb-1 block text-sm font-bold text-stone-900">
+        {label}
+      </span>
+      <textarea
+        {...props}
+        className="min-h-20 w-full resize-none text-sm leading-relaxed text-stone-900 outline-none"
+      />
+    </label>
   );
 }
